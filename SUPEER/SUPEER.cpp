@@ -9,7 +9,7 @@
 unsigned char cardsLeft = 52;
 
 struct cardNode {
-	cardNode *next;
+	cardNode *next = NULL;
 	unsigned char value = 0;
 	unsigned char* cardsLeft = NULL;
 };
@@ -71,8 +71,8 @@ int main()
 				}
 			}
 		}
+		destroyCardDeck(cardDeck);
 	}
-
 	system("pause");
     return 0;
 }
@@ -113,7 +113,13 @@ cardNode* generateCardDeck() {
 }
 
 void destroyCardDeck(cardNode* cardDeck) {
-
+	cardNode* currentCard = cardDeck;
+	unsigned char cardsLeft = *cardDeck->cardsLeft;
+	for (int i = 0; i < cardsLeft;i++) {
+		cardNode* t = currentCard;
+		currentCard = t->next;
+		free(t);
+	}
 }
 
 unsigned char takeRandomCard(cardNode* cardDeck) {
